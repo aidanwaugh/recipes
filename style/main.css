@@ -1,1 +1,273 @@
-/* No CSS */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+button {
+  border: none;
+  text-decoration: none;
+  background-color: #f5f5f5;
+  border: 1px dashed pink;
+  cursor: pointer;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+button:hover {
+  color: #858687;
+}
+
+.active {
+  color: #858687;
+}
+
+.hide {
+  display: none;
+}
+
+nav {
+  height: 3rem;
+  background-color: #f5f5f5;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2fr 1fr;
+      grid-template-columns: 1fr 2fr 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10vw;
+  font-size: 0.8rem;
+}
+
+nav .nav-main {
+  text-align: center;
+}
+
+nav .nav-main a {
+  text-decoration: none;
+  margin: 0 1rem;
+}
+
+nav .nav-main a:hover:not(.active) {
+  color: #858687;
+}
+
+nav form {
+  text-align: right;
+}
+
+nav form input {
+  background-color: #f5f5f5;
+  border: solid 1px #c2c2c2;
+  border-radius: 10px;
+  outline: none;
+  padding: 0 1rem;
+}
+
+.filter-container {
+  margin: 0 10vw;
+  font-size: 0.8rem;
+}
+
+.filter-container button {
+  font-size: 0.8rem;
+}
+
+.filter-container .filter-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 3rem;
+  margin-top: 1rem;
+  border-bottom: 1px solid #c2c2c2;
+}
+
+.filter-container .filter-top .filter-categories {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filter-container .filter-top .filter-categories p {
+  color: #858687;
+}
+
+.filter-container .filter-top .filter-applied {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filter-container .filter-top .filter-applied button:first-of-type {
+  color: #4a4a4a;
+}
+
+.filter-container .filter-top .filter-applied button:first-of-type:hover {
+  color: #858687;
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn {
+  position: relative;
+  color: #858687;
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn span {
+  display: inline-block;
+  position: relative;
+  height: 10px;
+  width: 10px;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn span::before, .filter-container .filter-top .filter-applied .applied-filter-btn span::after {
+  content: '';
+  height: 10px;
+  width: 1px;
+  background-color: #858687;
+  position: absolute;
+  right: 50%;
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn span::before {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn span::after {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn:hover {
+  color: #c2c2c2;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn:hover span {
+  -webkit-transform: translate(3px, 1px) rotate(90deg);
+          transform: translate(3px, 1px) rotate(90deg);
+}
+
+.filter-container .filter-top .filter-applied .applied-filter-btn:hover span::before, .filter-container .filter-top .filter-applied .applied-filter-btn:hover span::after {
+  background-color: #c2c2c2;
+}
+
+.filter-container .filter-bottom {
+  height: 9rem;
+  text-align: center;
+}
+
+.filter-container .filter-bottom p {
+  margin: 0;
+  padding: 2rem 0 1rem 0;
+}
+
+.filter-container .filter-bottom .filter-options button {
+  border: 1px solid #858687;
+  border-radius: 15px;
+  padding: 0.25rem 1rem;
+  margin: 0 0.25rem;
+}
+
+.filter-container .filter-bottom .filter-options button:hover, .filter-container .filter-bottom .filter-options button.active {
+  border-color: #c2c2c2;
+}
+
+.content {
+  margin: 0 10vw;
+}
+
+.content h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0 0 2rem 0;
+}
+
+.content .recipe-thumbnail {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.content .recipe-thumbnail article a:hover img {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.content .recipe-thumbnail article a:hover h2 {
+  color: #4a4a4a;
+}
+
+.content .recipe-thumbnail article a .img-zoom {
+  position: relative;
+  overflow: hidden;
+}
+
+.content .recipe-thumbnail article a .img-zoom img {
+  max-width: 100%;
+  height: auto;
+  -webkit-transition: -webkit-transform 0.5s ease;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  /* Animation */
+  display: block;
+}
+
+.content .recipe-thumbnail article a p {
+  font-size: 0.8rem;
+  color: #858687;
+  margin: 0.5rem 0;
+}
+
+.content .recipe-thumbnail article a h2 {
+  margin: 0 0 1rem 0;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+.recipe-container {
+  margin: 0 10vw;
+}
