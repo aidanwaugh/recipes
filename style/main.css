@@ -271,3 +271,159 @@ nav form input {
 .recipe-container {
   margin: 0 10vw;
 }
+
+.recipe-container header,
+.recipe-container section {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2fr;
+      grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+}
+
+.recipe-container header {
+  border-bottom: 1px solid #c2c2c2;
+  padding: 1.5rem 0;
+}
+
+.recipe-container header .recipe-image-container {
+  height: 10rem;
+}
+
+.recipe-container header .recipe-image-container img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.recipe-container header .intro {
+  height: 10rem;
+}
+
+.recipe-container header .intro h1 {
+  margin: 0;
+}
+
+.recipe-container header .intro h1 + p {
+  margin: 0.5rem 0 1rem 0;
+}
+
+.recipe-container header .intro .info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.recipe-container header .intro .info div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.recipe-container header .intro .info div .fact {
+  margin-right: 2rem;
+  display: block;
+}
+
+.recipe-container section {
+  margin: 0;
+  border-bottom: 1px solid #c2c2c2;
+}
+
+.recipe-container section h2 {
+  margin: 0 0 1rem 0;
+}
+
+.recipe-container section h3 {
+  color: #858687;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 1rem 0 0.25rem 0;
+}
+
+.recipe-container section ul,
+.recipe-container section ol {
+  margin: 0.25rem 0;
+}
+
+.fact p {
+  text-align: center;
+  margin: 0;
+}
+
+.fact .fact-title {
+  color: #858687;
+  margin-bottom: 0.5rem;
+}
+
+.fact input {
+  width: 3.2rem;
+  outline: none;
+  border: none;
+  background-color: #f5f5f5;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.ingredients-container {
+  padding: 1.5rem 0;
+}
+
+.ingredients-container ul {
+  padding-left: 1.3rem;
+  list-style: none;
+}
+
+.ingredients-container ul li {
+  position: relative;
+}
+
+.ingredients-container ul li::before {
+  content: '\2610';
+  position: absolute;
+  left: -1.3rem;
+}
+
+.ingredients-container ul li.complete::before {
+  content: '\2611';
+}
+
+.instructions-container {
+  padding: 1.5rem 0;
+}
+
+.instructions-container ol {
+  padding: 0;
+}
+
+.notes-container h2 {
+  margin: 1.5rem 0 0 0;
+}
+
+.notes-container p {
+  margin: 0.5rem 0;
+}
+
+.notes-container .tags-container {
+  margin: 1rem 0;
+}
+
+.notes-container .tags-container span {
+  margin: 0 0.5rem 0 0;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #c2c2c2;
+  border-radius: 25px;
+  color: #858687;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
