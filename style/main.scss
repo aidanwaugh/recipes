@@ -7,11 +7,11 @@
 }
 
 //Variables & Functions
-$breakpoint-desktop: 1200px;
-$breakpoint-tablet: 900px;
-$breakpoint-mobile: 600px;
+:root {
+  --site-margin: 10vw;
+  --site-margin-half: 2rem; //half of nav-height
+}
 
-$desktop-margin: 10%;
 $nav-height: 4rem;
 $text-small: 0.8rem;
 $transition-time: 0.3s;
@@ -50,15 +50,16 @@ $breakpoint-widths: (
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: color(bg);
-  @include breakpoint(lg) {
-    background-color: rgb(254, 255, 182);
-  }
-  @include breakpoint(md) {
-    background-color: rgb(208, 255, 182);
-  }
-  @include breakpoint(sm) {
-    background-color: rgb(149, 216, 255);
-  }
+  margin-bottom: 1rem;
+  // @include breakpoint(lg) {
+  //   background-color: rgb(254, 255, 182);
+  // }
+  // @include breakpoint(md) {
+  //   background-color: rgb(208, 255, 182);
+  // }
+  // @include breakpoint(sm) {
+  //   background-color: rgb(149, 216, 255);
+  // }
 }
 
 h1,
@@ -128,7 +129,7 @@ img {
 //Site Wide
 nav {
   height: $nav-height;
-  padding: 0 $desktop-margin;
+  padding: 0 var(--site-margin);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -154,16 +155,21 @@ nav {
     &:last-child {
       margin-right: 0;
     }
+    @include breakpoint(sm) {
+      font-size: $text-small;
+      margin-right: 0.5rem;
+    }
   }
   form {
     display: flex;
-    // border-bottom: 1px solid color(grey-light);
     @include breakpoint(md) {
-      width: calc(80% - 50px);
       z-index: 2;
-      position: fixed;
-      right: $desktop-margin;
-      justify-content: flex-end;
+      &.full-search {
+        width: calc(95% - 45px);
+      }
+      // position: fixed;
+      // right: var(--site-margin);
+      // justify-content: flex-end;
     }
     &:hover path {
       stroke: color(grey-medium);
@@ -184,6 +190,7 @@ nav {
       // }
       @include breakpoint(md) {
         width: 100%;
+        padding: 0 1rem;
       }
     }
     button {
@@ -214,7 +221,7 @@ nav {
 
 //Basic Grid
 .content {
-  margin: 0 $desktop-margin;
+  margin: 0 var(--site-margin);
   // background-color: red;
   .thumbnail-container {
     display: grid;
@@ -229,78 +236,107 @@ nav {
     }
     @include breakpoint(sm) {
       grid-template-columns: 1fr;
-      gap: $nav-height;
+      gap: $nav-height/2;
     }
   }
   .recipe-container {
     display: grid;
     grid-template-columns: 1fr 1fr 2fr;
     @include breakpoint(lg) {
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: 1fr 1fr;
     }
 
-    header {
-      padding-right: $desktop-margin/2;
+    .details {
+      padding-right: var(--site-margin-half);
+      padding-bottom: $nav-height/2;
+      border-right: 1px solid color(grey-light);
       @include breakpoint(lg) {
+        grid-column: 1/2;
+        padding-right: var(--site-margin-half);
+        padding-bottom: 0;
+        // border-bottom: 1px solid color(grey-light);
+      }
+      @include breakpoint(sm) {
         grid-column: 1/3;
+        border-right: none;
         padding-right: 0;
+        padding-bottom: $nav-height/4;
+        border-bottom: 1px solid color(grey-light);
       }
     }
     .ingredients-container,
     .instructions-container {
+      @include breakpoint(lg) {
+        padding-top: $nav-height/2;
+      }
       @include breakpoint(md) {
         grid-column: 1/3;
       }
     }
     .ingredients-container {
-      padding-left: $desktop-margin/2;
-      padding-right: $desktop-margin/2;
+      padding-left: var(--site-margin-half);
+      padding-right: var(--site-margin-half);
       @include breakpoint(lg) {
-        padding-left: 0;
-        padding-right: $desktop-margin/2;
+        // padding-left: 0;
+        padding-right: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        grid-column: 2/3;
+
+        // border-bottom: 1px solid color(grey-light);
       }
-      @include breakpoint(md) {
-        padding: 0;
+      // @include breakpoint(md) {
+      //   padding: $nav-height/2 0;
+      // }
+      @include breakpoint(sm) {
+        grid-column: 1/3;
+        padding: $nav-height/4 0;
       }
     }
     .instructions-container {
-      padding-left: $desktop-margin/2;
+      padding-left: var(--site-margin-half);
       @include breakpoint(lg) {
-        padding-left: $desktop-margin/2;
-        padding-right: 0;
+        padding: $nav-height/2 0;
+        margin-top: $nav-height/2;
+        border-top: 1px solid color(grey-light);
+        grid-column: 1/3;
+        // padding-right: 0;
       }
-      @include breakpoint(md) {
-        padding: 0;
+      @include breakpoint(sm) {
+        // padding: 0;
+        margin-top: 0;
+        padding: $nav-height/4 0;
       }
     }
   }
 }
 
-//Individual Page Styles
+//Individual Page Styles------------------------------------
+
 //Index Filter Container
 .filter-container {
-  //TODO: tablet + mobile design
   .filter-top {
-    padding: 0 $desktop-margin;
+    padding: 0 var(--site-margin);
     height: $nav-height/2;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid color(grey-light);
-    $filter-font-size: 0.8rem;
-    font-size: $filter-font-size;
+    // $filter-font-size: 0.8rem;
+    // font-size: $filter-font-size;
     letter-spacing: 0.5px;
     @include breakpoint(md) {
       flex-direction: column;
       height: $nav-height;
     }
     button {
-      font-size: $filter-font-size;
+      font-size: $text-small;
       border: none;
       letter-spacing: 0.25px;
     }
     .filter-categories {
       display: flex;
+      font-size: $text-small;
       @include breakpoint(md) {
         width: 100%;
         border-bottom: 1px solid color(grey-light);
@@ -312,6 +348,9 @@ nav {
         margin-right: 1rem;
         padding-right: 1rem;
         border-right: 1px solid color(grey-light);
+        @include breakpoint(sm) {
+          font-size: $text-small;
+        }
         // text-transform: uppercase;
       }
       .filter-buttons {
@@ -378,7 +417,7 @@ nav {
     }
   }
   .filter-bottom {
-    margin: 2rem $desktop-margin 0 $desktop-margin;
+    margin: 2rem var(--site-margin) 0 var(--site-margin);
     height: $nav-height * 1;
     display: flex;
     flex-direction: column;
@@ -386,7 +425,7 @@ nav {
     align-items: center;
     // margin-bottom: 1rem;
     p {
-      font-size: 0.8rem;
+      font-size: $text-small;
       color: color(grey-dark);
       margin-bottom: 0.5rem;
     }
@@ -406,15 +445,168 @@ nav {
 
 //index page
 .content {
-  .h1-index {
+  h1.h1-index {
     text-align: center;
     padding: 4rem 0 2rem 0;
   }
   article {
+    .img-zoom {
+      img {
+        transition: transform 0.5s ease;
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
     p {
       color: color(grey-medium);
-      font-size: 0.8rem;
+      font-size: $text-small;
       margin: 0.25rem 0 0.25rem 0;
     }
+  }
+}
+
+//recipe page
+.content {
+  .sub-recipe-title {
+    display: block;
+    margin-top: 2rem;
+    color: color(grey-medium);
+    font-size: $text-small;
+    // text-transform: uppercase;
+  }
+  h1.recipe-title {
+    padding-bottom: 1rem;
+  }
+  .details {
+    // border-right: 1px solid color(grey-light);
+
+    @include breakpoint(lg) {
+      border-right: none;
+    }
+  }
+  .recipe-container {
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+    ol,
+    ul {
+      margin-bottom: 0.5rem;
+      li {
+        margin: 0.25rem 0;
+      }
+    }
+    p,
+    li,
+    input,
+    span,
+    td {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  }
+}
+
+.details {
+  .fact:first-of-type {
+    margin-top: 0;
+  }
+  .fact {
+    margin: 1rem 0;
+    .fact-title {
+      // font-weight: 500;
+      color: color(grey-dark);
+      font-size: $text-small;
+      margin-bottom: 0.25rem;
+      // text-transform: uppercase;
+    }
+    p {
+      // color: color(grey-medium);
+    }
+    a {
+      text-decoration: underline color(grey-medium);
+    }
+  }
+}
+
+.fact {
+  span {
+    position: relative;
+    right: 7.5rem;
+    // width: 7rem;
+  }
+  table {
+    th {
+      color: color(grey-dark);
+      font-size: $text-small;
+      font-weight: 400;
+      padding-right: 1rem;
+    }
+    td:first-of-type {
+      text-align: left;
+    }
+    td {
+      text-align: center;
+      padding-right: 1rem;
+    }
+  }
+
+  input {
+    background: color(bg);
+    outline: none;
+    // border: none;
+    border: 1px solid color(grey-light);
+    padding: 0.25rem 0.1rem 0.25rem 0.5rem;
+    &:focus {
+      border-color: color(grey-medium);
+    }
+  }
+  #serves-input {
+    width: 3.2rem;
+  }
+  #nutrition-input {
+    width: 9rem;
+    margin: 0;
+
+    &:hover {
+      appearance: number-input;
+    }
+  }
+}
+
+.ingredients-container {
+  ul {
+    $list-padding: 1.3rem;
+    list-style: none;
+    padding-left: $list-padding;
+    @include breakpoint(lg) {
+    }
+    li {
+      position: relative;
+      &::before {
+        // width: 6.3rem;
+        content: '\2610';
+        position: absolute;
+        left: -$list-padding;
+      }
+      &.complete::before {
+        content: '\2611';
+      }
+      em {
+        color: color(grey-medium);
+        font-style: normal;
+      }
+    }
+  }
+}
+
+.instructions-container {
+  ol {
+    @include breakpoint(lg) {
+      padding-left: 1.2rem;
+    }
+  }
+  ul {
+    list-style-type: '-  ';
   }
 }
