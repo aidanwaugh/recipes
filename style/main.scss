@@ -2,31 +2,63 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-// general styles, typeography, utilities, sitewide, store pages
+
+//Variables & Functions
+$breakpoint-desktop: 1200px;
+$breakpoint-tablet: 900px;
+$breakpoint-mobile: 600px;
+
+$desktop-margin: 10%;
+$nav-height: 4rem;
+$text-small: 0.8rem;
+$transition-time: 0.3s;
 
 $colors: (
   bg: #f5f5f5,
   grey-light: #c2c2c2,
-  grey-medium: #858687,
-  grey-dark: #4a4a4a,
-  dark: #302e2e,
+  grey-medium: #818181,
+  grey-dark: #474747,
   accent: #2187ff,
+);
+
+//value smaller
+$breakpoint-widths: (
+  xl: 2000px,
+  lg: 1200px,
+  md: 900px,
+  sm: 600px,
 );
 
 @function color($color-name) {
   @return map-get($colors, $color-name);
 }
 
-$desktop: 1000px;
-$desktop-margin: 10vw;
-$nav-height: 3rem;
-$text-small: 0.8rem;
+@function getBreakpoint($breakpoint-name) {
+  @return map-get($breakpoint-widths, $breakpoint-name);
+}
 
+@mixin breakpoint($breakpoint) {
+  @media (max-width: #{getBreakpoint($breakpoint)}) {
+    @content;
+  }
+}
+
+//General Styles
 body {
   font-family: 'Montserrat', sans-serif;
-  margin: 0;
   background-color: color(bg);
+  @include breakpoint(lg) {
+    background-color: rgb(254, 255, 182);
+  }
+  @include breakpoint(md) {
+    background-color: rgb(208, 255, 182);
+  }
+  @include breakpoint(sm) {
+    background-color: rgb(149, 216, 255);
+  }
 }
 
 h1,
@@ -34,10 +66,28 @@ h2,
 h3 {
   font-weight: 400;
 }
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+h3 {
+  font-size: 0.9rem;
+  color: color(grey-medium);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 a {
   text-decoration: none;
   color: black;
-  transition-duration: 0.3s;
+  transition-duration: $transition-time;
 }
 
 button {
@@ -46,84 +96,244 @@ button {
   background-color: color(bg);
   border: 1px dashed pink;
   cursor: pointer;
-  transition-duration: 0.3s;
-  &:hover {
-    color: color(grey-medium);
+  transition-duration: $transition-time;
+  &:hover:not(.active):not(.active-underline) {
+    color: color(grey-light);
   }
 }
 
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.img-container {
+  position: relative;
+  overflow: hidden;
+}
+
+//Utilities
 .active {
-  color: color(grey-medium);
+  color: color(accent);
+}
+.active-underline {
+  border-bottom: 2px solid color(accent);
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
+//Site Wide
 nav {
   height: $nav-height;
-  background-color: color(bg);
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  // justify-content: space-between;
-  align-items: center;
   padding: 0 $desktop-margin;
-  // text-transform: uppercase;
-  font-size: $text-small;
-
-  .nav-main {
-    text-align: center;
-    a {
-      text-decoration: none;
-      // color: color(dark);
-      margin: 0 1rem;
-
-      &:hover:not(.active) {
-        color: color(grey-medium);
-      }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // border: 1px dashed palevioletred;
+  border-bottom: 1px solid color(grey-light);
+  .logo {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    margin-right: 1.2rem;
+    @include breakpoint(md) {
+      display: none;
+    }
+  }
+  a {
+    margin-right: 0.8rem;
+    letter-spacing: 0.5px;
+    &:hover:not(.logo):not(.active-underline) {
+      color: color(grey-medium);
+    }
+    &:not(.logo) {
+      padding: 0 0.2rem;
+    }
+    &:last-child {
+      margin-right: 0;
     }
   }
   form {
-    text-align: right;
+    display: flex;
+    // border-bottom: 1px solid color(grey-light);
+    @include breakpoint(md) {
+      width: calc(80% - 50px);
+      z-index: 2;
+      position: fixed;
+      right: $desktop-margin;
+      justify-content: flex-end;
+    }
+    &:hover path {
+      stroke: color(grey-medium);
+    }
+    &:focus-within {
+      border-bottom: 2px solid color(grey-medium);
+    }
     input {
-      background-color: color(bg);
-      border: solid 1px color(grey-light);
-      border-radius: 10px;
-      outline: none;
-      padding: 0 1rem;
+      border: none;
+      width: 11rem;
+      padding-right: 1rem;
+      font-size: 0.9rem;
+      background: color(bg);
+      color: color(grey-dark);
+      border-bottom: 1px solid color(grey-light);
+      // &:focus-within {
+      //   border-color: color(grey-medium);
+      // }
+      @include breakpoint(md) {
+        width: 100%;
+      }
+    }
+    button {
+      border: none;
+      align-self: end;
+      background: color(bg);
+      border-bottom: 1px solid color(grey-light);
+      svg {
+        $search-size: 1.3rem;
+        width: $search-size;
+        height: $search-size;
+        g {
+          scale: 1.4;
+          // width: $nav-height/2;
+          // height: $nav-height/2;
+          path {
+            stroke: color(grey-light);
+            stroke-width: 1.8;
+            fill: none;
+            stroke-linecap: square;
+            transition-duration: $transition-time;
+          }
+        }
+      }
     }
   }
 }
 
-.filter-container {
+//Basic Grid
+.content {
   margin: 0 $desktop-margin;
-  font-size: $text-small;
-  button {
-    font-size: $text-small;
+  // background-color: red;
+  .thumbnail-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $nav-height;
+    @include breakpoint(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include breakpoint(md) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $nav-height/2;
+    }
+    @include breakpoint(sm) {
+      grid-template-columns: 1fr;
+      gap: $nav-height;
+    }
   }
+  .recipe-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    @include breakpoint(lg) {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    header {
+      padding-right: $desktop-margin/2;
+      @include breakpoint(lg) {
+        grid-column: 1/3;
+        padding-right: 0;
+      }
+    }
+    .ingredients-container,
+    .instructions-container {
+      @include breakpoint(md) {
+        grid-column: 1/3;
+      }
+    }
+    .ingredients-container {
+      padding-left: $desktop-margin/2;
+      padding-right: $desktop-margin/2;
+      @include breakpoint(lg) {
+        padding-left: 0;
+        padding-right: $desktop-margin/2;
+      }
+      @include breakpoint(md) {
+        padding: 0;
+      }
+    }
+    .instructions-container {
+      padding-left: $desktop-margin/2;
+      @include breakpoint(lg) {
+        padding-left: $desktop-margin/2;
+        padding-right: 0;
+      }
+      @include breakpoint(md) {
+        padding: 0;
+      }
+    }
+  }
+}
+
+//Individual Page Styles
+//Index Filter Container
+.filter-container {
+  //TODO: tablet + mobile design
   .filter-top {
+    padding: 0 $desktop-margin;
+    height: $nav-height/2;
     display: flex;
-    height: $nav-height;
-    margin-top: 1rem;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid color(grey-light);
+    $filter-font-size: 0.8rem;
+    font-size: $filter-font-size;
+    letter-spacing: 0.5px;
+    @include breakpoint(md) {
+      flex-direction: column;
+      height: $nav-height;
+    }
+    button {
+      font-size: $filter-font-size;
+      border: none;
+      letter-spacing: 0.25px;
+    }
     .filter-categories {
       display: flex;
-      flex: 1;
-      align-items: center;
-      p {
+      @include breakpoint(md) {
+        width: 100%;
+        border-bottom: 1px solid color(grey-light);
+        padding: 0.5rem 0;
+      }
+      & > p {
         color: color(grey-medium);
+        line-height: 18px;
+        margin-right: 1rem;
+        padding-right: 1rem;
+        border-right: 1px solid color(grey-light);
+        // text-transform: uppercase;
+      }
+      .filter-buttons {
+        button {
+          margin-right: 1rem;
+        }
       }
     }
     .filter-applied {
       display: flex;
       flex-direction: row-reverse;
-      align-items: center;
-      button:first-of-type {
-        color: color(grey-dark);
-
+      @include breakpoint(md) {
+        align-self: flex-end;
+      }
+      & button:first-of-type {
+        color: color(accent);
         &:hover {
           color: color(grey-medium);
         }
+      }
+      button {
+        margin-left: 1rem;
       }
       .applied-filter-btn {
         position: relative;
@@ -155,7 +365,9 @@ nav {
           color: color(grey-light);
           transition-duration: 0.5s;
           span {
-            transform: translate(3px, 1px) rotate(90deg);
+            // transform: translate(3px, 1px) rotate(90deg);
+            transform: translate(1px, 1px) rotate(90deg);
+            // transform: rotate(90deg);
             &::before,
             &::after {
               background-color: color(grey-light);
@@ -166,204 +378,43 @@ nav {
     }
   }
   .filter-bottom {
-    height: 3 * $nav-height;
-    text-align: center;
+    margin: 2rem $desktop-margin 0 $desktop-margin;
+    height: $nav-height * 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    // margin-bottom: 1rem;
     p {
-      margin: 0;
-      padding: 2rem 0 1rem 0;
+      font-size: 0.8rem;
+      color: color(grey-dark);
+      margin-bottom: 0.5rem;
     }
-    .filter-options {
-      button {
-        border: 1px solid color(grey-medium);
-        border-radius: 15px;
-        padding: 0.25rem 1rem;
-        margin: 0 0.25rem;
-        &:hover,
-        &.active {
-          border-color: color(grey-light);
-        }
+    button {
+      border: 1px solid color(grey-medium);
+      border-radius: 20px;
+      padding: 0.25rem 0.75rem;
+      color: color(grey-dark);
+      margin: 0.25rem;
+      &:hover {
+        border-color: color(grey-light);
+        color: color(grey-light);
       }
     }
   }
 }
 
+//index page
 .content {
-  margin: 0 $desktop-margin;
-  h1 {
+  .h1-index {
     text-align: center;
-    font-size: 2rem;
-    margin: 0 0 2rem 0;
+    padding: 4rem 0 2rem 0;
   }
-  .recipe-thumbnail {
-    display: grid;
-    // grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    article {
-      a {
-        &:hover {
-          img {
-            transform: scale(1.05);
-          }
-          h2 {
-            color: color(grey-dark);
-          }
-        }
-        .img-zoom {
-          position: relative;
-          overflow: hidden;
-          img {
-            max-width: 100%;
-            height: auto;
-            transition: transform 0.5s ease; /* Animation */
-            display: block;
-          }
-        }
-        p {
-          font-size: $text-small;
-          color: color(grey-medium);
-          margin: 0.5rem 0;
-        }
-        h2 {
-          margin: 0 0 1rem 0;
-          transition-duration: 0.3s;
-        }
-      }
-    }
-  }
-}
-
-// Recipe single page ------------------------
-.recipe-container {
-  margin: 0 $desktop-margin;
-  header,
-  section {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: $nav-height;
-  }
-  header {
-    border-bottom: 1px solid color(grey-light);
-    padding: $nav-height/2 0;
-    .recipe-image-container {
-      height: 10rem;
-      img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
-    }
-    .intro {
-      height: 10rem;
-      h1 {
-        margin: 0;
-      }
-      h1 + p {
-        margin: 0.5rem 0 1rem 0;
-      }
-      .info {
-        display: flex;
-        flex-direction: row;
-        div {
-          display: flex;
-          flex-direction: row;
-          .fact {
-            margin-right: 2rem;
-            display: block;
-          }
-          // :last-child {
-          //   margin-right: 0;
-          // }
-        }
-      }
-    }
-  }
-  section {
-    margin: 0;
-    border-bottom: 1px solid color(grey-light);
-
-    h2 {
-      margin: 0 0 1rem 0;
-    }
-    h3 {
+  article {
+    p {
       color: color(grey-medium);
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 1rem 0 0.25rem 0;
-    }
-    ul,
-    ol {
-      margin: 0.25rem 0;
+      font-size: 0.8rem;
+      margin: 0.25rem 0 0.25rem 0;
     }
   }
-}
-
-.fact {
-  p {
-    text-align: center;
-    margin: 0;
-  }
-  .fact-title {
-    color: color(grey-medium);
-    margin-bottom: 0.5rem;
-  }
-  input {
-    width: 3.2rem;
-    outline: none;
-    border: none;
-    background-color: color(bg);
-    text-align: center;
-    font-size: 1rem;
-  }
-}
-
-.ingredients-container {
-  $marker-width: 1.3rem;
-  padding: $nav-height/2 0;
-  ul {
-    padding-left: $marker-width;
-    list-style: none;
-    li {
-      position: relative;
-    }
-    li::before {
-      content: '\2610';
-      position: absolute;
-      left: -$marker-width;
-    }
-    li.complete::before {
-      content: '\2611';
-    }
-  }
-}
-
-.instructions-container {
-  padding: $nav-height/2 0;
-  ol {
-    padding: 0;
-  }
-}
-.notes-container {
-  h2 {
-    margin: $nav-height/2 0 0 0;
-  }
-  p {
-    margin: 0.5rem 0;
-  }
-  .tags-container {
-    margin: 1rem 0;
-    span {
-      margin: 0 0.5rem 0 0;
-      padding: 0.25rem 0.5rem;
-      border: 1px solid color(grey-light);
-      border-radius: 25px;
-      color: color(grey-medium);
-      font-size: $text-small;
-      text-transform: uppercase;
-    }
-  }
-}
-
-@media (max-width: #{$desktop}) {
 }
