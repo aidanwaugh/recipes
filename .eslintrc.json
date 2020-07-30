@@ -11,6 +11,9 @@
   "rules": {
     "no-console": "off",
     "no-unused-vars": "warn",
-    "func-names": "warn"
+    "func-names": "warn",
+    "object-curly-newline": "error",
+    "max-len": "off",
+    "no-return-assign": 0
   }
 }

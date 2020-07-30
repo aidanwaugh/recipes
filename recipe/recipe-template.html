@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style/main.css">
+  <script src="/src/app.js" type="module"></script>
   <title>Waugh Recipes</title>
 </head>
 
@@ -38,7 +39,7 @@
   <div class="content">
     <header>
       <span class="sub-recipe-title">Waugh family classic</span>
-      <h1 class="recipe-title">Merichino Cherry Pound Cake</h1>
+      <h1 class="recipe-title" data-recipe-title data-genre="breakfast">Biscuits</h1>
     </header>
     <div class="recipe-container">
       <section class="details">
@@ -47,24 +48,25 @@
         <div class="info">
           <div class="fact">
             <p class="fact-title">Serves</p>
-            <input type="number" name="" id="serves-input" min="1">
+            <input type="number" name="" id="serves-input" min="1" data-details-serves>
+            <span data-details-serves-type>slices</span>
           </div>
           <div class="fact">
             <p class="fact-title">Difficulty</p>
-            <p>Easy</p>
+            <p data-details-difficulty>impossible</p>
           </div>
           <div class="fact">
             <p class="fact-title">Prep / Cook Time</p>
-            <p>30 min / 60 min</p>
+            <p data-details-time>30 min / 60 min</p>
           </div>
           <div class="fact">
             <p class="fact-title">Nutrition Per Serving</p>
-            <input type="number" name="" id="nutrition-input" min="1" value="1">
-            <span>slices</span>
+            <input type="number" name="" id="nutrition-input" min="1" value="1" data-nutrition-serving>
+            <span data-nutrition-type>slices</span>
           </div>
           <div class="fact">
             <p class="fact-title">Calories</p>
-            <p>122cal</p>
+            <p data-macro-calories>122cal</p>
           </div>
           <div class="fact">
             <table>
@@ -74,9 +76,9 @@
                 <th>Protein</th>
               </tr>
               <tr>
-                <td>3g</td>
-                <td>43g</td>
-                <td>6g</td>
+                <td data-macro-carbs>3g</td>
+                <td data-macro-fat>43g</td>
+                <td data-macro-protein>6g</td>
               </tr>
             </table>
           </div>
@@ -87,8 +89,8 @@
                 <th>Sugar</th>
               </tr>
               <tr>
-                <td>3g</td>
-                <td>43g</td>
+                <td data-macro-fiber>3g</td>
+                <td data-macro-sugar>43g</td>
               </tr>
             </table>
           </div>
@@ -98,7 +100,7 @@
           </div>
           <div class="fact">
             <p class="fact-title">Tags</p>
-            <p>Asian, Waugh, Dumpling, Birthday</p>
+            <p data-tags>Asian, Waugh, Dumpling, Birthday</p>
           </div>
         </div>
       </section>
@@ -106,8 +108,8 @@
         <h2>Ingredients</h2>
         <h3>Section if Applicable</h3>
         <ul>
-          <li class="complete">Hard coded items complete</li>
-          <li>this is <em>diced</em></li>
+          <li class="complete">Hard coded items, complete</li>
+          <li>this is, <em>diced</em></li>
         </ul>
       </section>
       <section class="instructions-container">

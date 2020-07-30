@@ -634,19 +634,12 @@ nav form button svg g path {
   outline: none;
   border: 1px solid #c2c2c2;
   padding: 0.25rem 0.1rem 0.25rem 0.5rem;
+  width: 9rem;
+  margin: 0;
 }
 
 .fact input:focus {
   border-color: #818181;
-}
-
-.fact #serves-input {
-  width: 3.2rem;
-}
-
-.fact #nutrition-input {
-  width: 9rem;
-  margin: 0;
 }
 
 .fact #nutrition-input:hover {

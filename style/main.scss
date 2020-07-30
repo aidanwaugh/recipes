@@ -557,17 +557,14 @@ nav {
     // border: none;
     border: 1px solid color(grey-light);
     padding: 0.25rem 0.1rem 0.25rem 0.5rem;
+    width: 9rem;
+    margin: 0;
     &:focus {
       border-color: color(grey-medium);
     }
   }
-  #serves-input {
-    width: 3.2rem;
-  }
-  #nutrition-input {
-    width: 9rem;
-    margin: 0;
 
+  #nutrition-input {
     &:hover {
       appearance: number-input;
     }
