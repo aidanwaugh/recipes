@@ -39,34 +39,34 @@
   <div class="content">
     <header>
       <span class="sub-recipe-title">Waugh family classic</span>
+      <!-- h1 title must match JS & enter recipe genre! -->
       <h1 class="recipe-title" data-recipe-title data-genre="breakfast">Biscuits</h1>
     </header>
     <div class="recipe-container">
       <section class="details">
-        <!-- <h1>Merichino Cherry Pound Cake</h1> -->
         <h2>Details</h2>
         <div class="info">
           <div class="fact">
             <p class="fact-title">Serves</p>
             <input type="number" name="" id="serves-input" min="1" data-details-serves>
-            <span data-details-serves-type>slices</span>
+            <span data-details-serves-type>*</span>
           </div>
           <div class="fact">
             <p class="fact-title">Difficulty</p>
-            <p data-details-difficulty>impossible</p>
+            <p data-details-difficulty>*</p>
           </div>
           <div class="fact">
             <p class="fact-title">Prep / Cook Time</p>
-            <p data-details-time>30 min / 60 min</p>
+            <p data-details-time>*</p>
           </div>
           <div class="fact">
             <p class="fact-title">Nutrition Per Serving</p>
             <input type="number" name="" id="nutrition-input" min="1" value="1" data-nutrition-serving>
-            <span data-nutrition-type>slices</span>
+            <span data-nutrition-type>*</span>
           </div>
           <div class="fact">
             <p class="fact-title">Calories</p>
-            <p data-macro-calories>122cal</p>
+            <p data-macro-calories>*</p>
           </div>
           <div class="fact">
             <table>
@@ -76,9 +76,9 @@
                 <th>Protein</th>
               </tr>
               <tr>
-                <td data-macro-carbs>3g</td>
-                <td data-macro-fat>43g</td>
-                <td data-macro-protein>6g</td>
+                <td data-macro-carbs>*</td>
+                <td data-macro-fat>*</td>
+                <td data-macro-protein>*</td>
               </tr>
             </table>
           </div>
@@ -89,59 +89,52 @@
                 <th>Sugar</th>
               </tr>
               <tr>
-                <td data-macro-fiber>3g</td>
-                <td data-macro-sugar>43g</td>
+                <td data-macro-fiber>*</td>
+                <td data-macro-sugar>*</td>
               </tr>
             </table>
           </div>
           <div class="fact">
             <p class="fact-title">Source</p>
-            <p>Somb book here / <a href="#">link</a></p>
+            <p>Book or <a href="#">link</a></p>
           </div>
           <div class="fact">
             <p class="fact-title">Tags</p>
-            <p data-tags>Asian, Waugh, Dumpling, Birthday</p>
+            <p data-tags>*</p>
           </div>
         </div>
       </section>
       <section class="ingredients-container">
         <h2>Ingredients</h2>
-        <h3>Section if Applicable</h3>
-        <ul>
-          <li class="complete">Hard coded items, complete</li>
-          <li>this is, <em>diced</em></li>
+        <h3>Title Optional</h3>
+        <ul data-ingredient-list>
+          <li><span data-ingredient>2 cups</span> Hard coded items, complete</li>
+          <li><span data-ingredient>10 tsp</span> this is, <em>diced</em></li>
+        </ul>
+        <h3>Another Optional Title For Sections</h3>
+        <ul data-ingredient-list>
+          <li><span data-ingredient>0.5 cup</span> Hard 1 1/2 coded items, complete</li>
+          <li><span data-ingredient>5g</span> this is, <em>diced</em></li>
         </ul>
       </section>
       <section class="instructions-container">
-        <h2>Cooking Instructions</h2>
+        <h2>Cooking Instructions </h2>
+        <h3>Optional Section Title</h3>
         <ol>
-          <li>Hardcoded tho this the ing and the other buwa ter</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
-          <li>butternbugs</li>
+          <li>Step on how to cook 1 <sup>6</sup>/<sub>7</sub></li>
+          <li>The next step to complete</li>
+        </ol>
+        <h3>Optional Section Title</h3>
+        <ol>
+          <li>Step if recipe has multiple sections</li>
+          <li>Having 2 lists will probably be rare</li>
         </ol>
         <h3>Notes</h3>
         <ul>
-          <li>thing</li>
+          <li>Any chef notes or useful info</li>
         </ul>
       </section>
-      <!-- <div class="notes-container">
-        <h2>Notes</h2>
-        <p>have some notes and stuff here for what not</p>
-        <p>have some notes and stuff here for what not</p>
-        <div class="tags-container">
-          <span>Thing </span><span>chicken </span>
-        </div>
-      </div> -->
+
     </div>
   </div>
 </body>

@@ -617,16 +617,11 @@ nav form button svg g path {
   color: #474747;
   font-size: 0.8rem;
   font-weight: 400;
-  padding-right: 1rem;
+  padding-right: 2.5rem;
 }
 
 .fact table td:first-of-type {
   text-align: left;
-}
-
-.fact table td {
-  text-align: center;
-  padding-right: 1rem;
 }
 
 .fact input {

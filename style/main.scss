@@ -540,14 +540,14 @@ nav {
       color: color(grey-dark);
       font-size: $text-small;
       font-weight: 400;
-      padding-right: 1rem;
+      padding-right: 2.5rem;
     }
     td:first-of-type {
       text-align: left;
     }
     td {
-      text-align: center;
-      padding-right: 1rem;
+      // text-align: center;
+      // padding-right: 1rem;
     }
   }
 

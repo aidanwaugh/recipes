@@ -4,7 +4,7 @@ export const allRecipes = {
   breakfast: [
     {
       name: 'bisucits',
-      details: { serves: 4, type: 'ppl 3pc', difficulty: 'easy peasy', prep: 15, cook: 20 },
+      details: { serves: 4, type: 'ppl 3pc', difficulty: 'easy peasy', prep: 99, cook: 88 },
       nutrition: {
         serving: 1,
         type: 'slice ref',
