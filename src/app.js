@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable import/extensions */
 import { allRecipes } from './recipe-list.js';
 
@@ -83,6 +84,7 @@ nutritionInputElement.addEventListener('change', (e) => {
 const ingredientElements = document.querySelectorAll(recipeElements.ingredients);
 
 const ingredientListElement = document.querySelector(recipeElements.ingredientList);
+
 // toggle ingredient check mark
 ingredientListElement.addEventListener('click', (e) => {
   if (e.target.tagName === 'LI') {
@@ -92,32 +94,18 @@ ingredientListElement.addEventListener('click', (e) => {
   }
 });
 
+const originalIngredients = [];
+
+ingredientElements.forEach((ingredient) => {
+  originalIngredients.push(ingredient.innerHTML);
+});
+
 function updateIngredients(newValue) {
-  const defaultValue = currentRecipe.details.serves;
-  const multiplier = (newValue / defaultValue).toFixed(2);
-  // console.log(multiplier);
+  // debugger;
+  console.log(typeof newValue);
+  const defaultServesValue = currentRecipe.details.serves;
+  const multiplier = (newValue / defaultServesValue).toFixed(2);
 
-  /*   TODO: convert measurements
-1 take value to ml
-multimply ML value and round to right value
-convert to proper measurement
-add proper ending 'cup', 'tsp'
-*/
-
-  /*   function multiplyBaseMeasurement(ingredient, numberOriginal) {
-    // all to mL except grams (last one)
-    if (ingredient.match(/tsp/g) !== null) {
-      return numberOriginal * 4.2 * multiplier;
-    } else if (ingredient.match(/tbsp/g) !== null) {
-      return numberOriginal * 14.8 * multiplier;
-    } else if (ingredient.match(/cup/g) !== null) {
-      return numberOriginal * 250 * multiplier;
-    } else if (ingredient.match(/ml/g) !== null) {
-      return numberOriginal * multiplier;
-    } else if (ingredient.match(/g/g) !== null) {
-      return numberOriginal * multiplier;
-    }
-  } */
   const mlPer = {
     ml: 1,
     tsp: 4.2,
@@ -133,16 +121,16 @@ add proper ending 'cup', 'tsp'
       if (measurement > mlPer.cup / 4 && measurement < mlPer.litre) {
         let x = measurement / mlPer.cup;
         if (measurement / mlPer.cup <= 1) {
-          finalString = `${x.toString()} cup`;
+          finalString = `${x.toFixed(2).toString()} cup`;
         } else {
-          finalString = `${x.toString()} cups`;
+          finalString = `${x.toFixed(2).toString()} cups`;
         }
       } else if (measurement >= mlPer.litre) {
         let x = measurement / mlPer.litre;
         if (measurement / mlPer.litre <= 1) {
-          finalString = `${x.toString()} litre`;
+          finalString = `${x.toFixed(2).toString()} litre`;
         } else {
-          finalString = `${x.toString()} litres`;
+          finalString = `${x.toFixed(2).toString()} litres`;
         }
       }
     }
@@ -151,8 +139,32 @@ add proper ending 'cup', 'tsp'
 
   const adjustedIngredients = [];
   ingredientElements.forEach((x) => {
-    let ingredient = x.innerHTML;
-    let numberOriginal = ingredient.match(/\d*\.*\d+/g)[0];
+    // TODO: equalt to origional element
+    let ingredient = x.dataset.ingredient;
+    let numberOriginal = 0;
+    // eslint-disable-next-line prefer-destructuring
+    // console.log(ingredient.match(/\d\/\d|\d+\s\d\/\d/g) !== null);
+    // debugger;
+    if (ingredient.match(/\d\/\d|\d+\s\d\/\d/g) !== null) {
+      let wholeNumber = 0;
+      let numerator = 0;
+      let denominator = 0;
+      if (ingredient.match(/\d\/\d/g)) {
+        numerator = parseInt(ingredient.match(/\d\/\d/g)[0], 10);
+        denominator = parseInt(ingredient.match(/\/\d/g)[0].slice(1), 10);
+        // console.log(denominator);
+        numberOriginal = (numerator / denominator).toFixed(2);
+        // console.log(numerator);
+      }
+      if (ingredient.match(/\d+\s\d\/\d/g) !== null) {
+        wholeNumber = parseInt(ingredient.match(/^\d+/g)[0], 10);
+        numerator = parseInt(ingredient.match(/\d\//g)[0], 10);
+        denominator = parseInt(ingredient.match(/\/\d/g)[0].slice(1), 10);
+        numberOriginal = (wholeNumber + numerator / denominator).toFixed(2);
+      }
+    } else if (ingredient.match(/\d*\.*\d+/g) !== null) {
+      numberOriginal = ingredient.match(/\d*\.*\d+/g)[0];
+    }
     let numberAdjusted = 0;
     let newMeasurement = '';
 
@@ -175,12 +187,16 @@ add proper ending 'cup', 'tsp'
       numberAdjusted = numberOriginal * multiplier;
       newMeasurement = formatMultipliedMeasurement(numberAdjusted, 'g');
     }
-
+    // ingredient = newMeasurement;
+    x.innerHTML = newMeasurement;
     adjustedIngredients.push(newMeasurement);
   });
   console.log(adjustedIngredients);
 }
 
 servesInputElement.addEventListener('change', () => {
-  updateIngredients(servesInputElement.value);
+  updateIngredients(parseInt(servesInputElement.value, 10));
 });
+
+console.log(ingredientElements);
+// window.onload = updateIngredients(4);
