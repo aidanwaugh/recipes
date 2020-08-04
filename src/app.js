@@ -96,19 +96,6 @@ ingredientListElement.forEach((list) => {
     }
   });
 });
-// ingredientListElement.addEventListener('click', (e) => {
-//   if (e.target.tagName === 'LI') {
-//     e.target.classList.toggle('complete');
-//   } else if (e.target.tagName === 'SPAN' || e.target.tagName === 'EM') {
-//     e.target.parentElement.classList.toggle('complete');
-//   }
-// });
-
-// const originalIngredients = [];
-
-// ingredientElements.forEach((ingredient) => {
-//   originalIngredients.push(ingredient.innerHTML);
-// });
 
 function updateIngredients(newValue) {
   // debugger;
@@ -125,41 +112,90 @@ function updateIngredients(newValue) {
     litre: 1000,
   };
 
+  function formatentireFraction(value, measurementType) {
+    /* split value into whole, numerator, denominator
+    if larger than 1 have no S, if larger have S
+    return as a fraction */
+    let plural = '';
+    if (value > 1) plural = 's';
+
+    const roundUp = 87;
+    const defaultComparison = [25, 50, 75];
+    const tspComparison = [12, 25, 50, 75];
+    const cupComparison = [25, 33, 50, 66, 75];
+    const numberToFraction = {
+      12: '1/8',
+      25: '1/4',
+      33: '1/3',
+      50: '1/2',
+      66: '2/3',
+      75: '3/4',
+    };
+    // console.log(value.toFixed(2));
+    const valueString = value.toFixed(2);
+    let wholeNumber = '';
+    let space = ' ';
+    let fraction = '';
+    let entireFraction = '';
+    let closestValue;
+
+    if (valueString.match(/\d+\./) !== null) {
+      wholeNumber = valueString.match(/\d+\./)[0].slice(0, -1);
+      const decimal = parseInt(valueString.match(/\.\d+/)[0].slice(1, 3), 10);
+      console.log(valueString.match(/\.\d+/)[0]);
+      if (decimal >= roundUp) {
+        wholeNumber = parseInt(wholeNumber, 10) + 1;
+        fraction = '0';
+      } else if (measurementType === 'cup' && decimal < roundUp) {
+        closestValue = cupComparison.reduce((prev, curr) => (Math.abs(curr - decimal) < Math.abs(prev - decimal) ? curr : prev));
+        fraction = numberToFraction[closestValue.toString()];
+      } else if (measurementType === 'tsp' && decimal < roundUp) {
+        closestValue = tspComparison.reduce((prev, curr) => (Math.abs(curr - decimal) < Math.abs(prev - decimal) ? curr : prev));
+        fraction = numberToFraction[closestValue.toString()];
+      } else {
+        closestValue = defaultComparison.reduce((prev, curr) => (Math.abs(curr - decimal) < Math.abs(prev - decimal) ? curr : prev));
+        fraction = numberToFraction[closestValue.toString()];
+      }
+
+      console.log(wholeNumber, decimal, closestValue, fraction);
+
+      if (wholeNumber === '0') {
+        wholeNumber = '';
+        space = '';
+      }
+      if (fraction === '0') {
+        fraction = '';
+        space = '';
+      }
+      entireFraction = `${wholeNumber}${space}${fraction} ${measurementType}${plural} `;
+    } else if (valueString.match(/\d+/) !== null) {
+      wholeNumber = valueString.match(/\d+/);
+      entireFraction = `${wholeNumber} ${measurementType}${plural}`;
+    } else {
+      return console.error('no match');
+    }
+    return entireFraction;
+  }
+
   function formatMultipliedMeasurement(measurement, measurementType) {
     let finalString = '';
     if (measurementType === 'g') finalString = `${measurement.toFixed(0).toString()}g`;
     if (measurementType === 'ml') {
       if (measurement < mlPer.tsp) {
-        let x = measurement / mlPer.tsp;
-        finalString = `${x.toFixed(2).toString()} tsp`;
+        const x = measurement / mlPer.tsp;
+        finalString = formatentireFraction(x, 'tsp');
       } else if (measurement >= mlPer.tsp && measurement < mlPer.tbsp) {
-        let x = measurement / mlPer.tsp;
-        if (measurement / mlPer.tsp <= 1) {
-          finalString = `${x.toFixed(2).toString()} tsp`;
-        } else {
-          finalString = `${x.toFixed(2).toString()} tsps`;
-        }
+        const x = measurement / mlPer.tsp;
+        finalString = formatentireFraction(x, 'tsp');
       } else if (measurement >= mlPer.tbsp && measurement < mlPer.cup / 4) {
-        let x = measurement / mlPer.tbsp;
-        if (measurement / mlPer.tbsp <= 1) {
-          finalString = `${x.toFixed(2).toString()} tbsp`;
-        } else {
-          finalString = `${x.toFixed(2).toString()} tbsps`;
-        }
+        const x = measurement / mlPer.tbsp;
+        finalString = formatentireFraction(x, 'tbsp');
       } else if (measurement >= mlPer.cup / 4 && measurement < mlPer.litre) {
-        let x = measurement / mlPer.cup;
-        if (measurement / mlPer.cup <= 1) {
-          finalString = `${x.toFixed(2).toString()} cup`;
-        } else {
-          finalString = `${x.toFixed(2).toString()} cups`;
-        }
+        const x = measurement / mlPer.cup;
+        finalString = formatentireFraction(x, 'cup');
       } else if (measurement >= mlPer.litre) {
-        let x = measurement / mlPer.litre;
-        if (measurement / mlPer.litre <= 1) {
-          finalString = `${x.toFixed(2).toString()} litre`;
-        } else {
-          finalString = `${x.toFixed(2).toString()} litres`;
-        }
+        const x = measurement / mlPer.litre;
+        finalString = formatentireFraction(x, 'litre');
       }
     }
     return finalString;
@@ -167,12 +203,8 @@ function updateIngredients(newValue) {
 
   const adjustedIngredients = [];
   ingredientElements.forEach((x) => {
-    // TODO: equalt to origional element
-    let ingredient = x.dataset.ingredient;
+    const ingredient = x.dataset.ingredient;
     let numberOriginal = 0;
-    // eslint-disable-next-line prefer-destructuring
-    // console.log(ingredient.match(/\d\/\d|\d+\s\d\/\d/g) !== null);
-    // debugger;
     if (ingredient.match(/\d\.\d|\d+\s\d\.\d/g) !== null) {
       let wholeNumber = 0;
       let numerator = 0;
@@ -180,9 +212,7 @@ function updateIngredients(newValue) {
       if (ingredient.match(/\d\.\d/g)) {
         numerator = parseInt(ingredient.match(/\d\.\d/g)[0], 10);
         denominator = parseInt(ingredient.match(/\.\d/g)[0].slice(1), 10);
-        // console.log(denominator);
         numberOriginal = (numerator / denominator).toFixed(2);
-        // console.log(numerator);
       }
       if (ingredient.match(/\d+\s\d\.\d/g) !== null) {
         wholeNumber = parseInt(ingredient.match(/^\d+/g)[0], 10);
@@ -215,7 +245,6 @@ function updateIngredients(newValue) {
       numberAdjusted = numberOriginal * multiplier;
       newMeasurement = formatMultipliedMeasurement(numberAdjusted, 'g');
     }
-    // ingredient = newMeasurement;
     x.innerHTML = newMeasurement;
     adjustedIngredients.push(newMeasurement);
   });
@@ -227,4 +256,4 @@ servesInputElement.addEventListener('change', () => {
 });
 
 console.log(ingredientElements);
-window.onload = updateIngredients(4);
+window.onload = updateIngredients(servesInputElement.value);
