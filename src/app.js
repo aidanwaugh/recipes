@@ -82,23 +82,33 @@ nutritionInputElement.addEventListener('change', (e) => {
 
 // ingredients ------------------------
 const ingredientElements = document.querySelectorAll(recipeElements.ingredients);
+console.log(ingredientElements);
 
-const ingredientListElement = document.querySelector(recipeElements.ingredientList);
+const ingredientListElement = document.querySelectorAll(recipeElements.ingredientList);
 
 // toggle ingredient check mark
-ingredientListElement.addEventListener('click', (e) => {
-  if (e.target.tagName === 'LI') {
-    e.target.classList.toggle('complete');
-  } else if (e.target.tagName === 'SPAN' || e.target.tagName === 'EM') {
-    e.target.parentElement.classList.toggle('complete');
-  }
+ingredientListElement.forEach((list) => {
+  list.addEventListener('click', (e) => {
+    if (e.target.tagName === 'LI') {
+      e.target.classList.toggle('complete');
+    } else if (e.target.tagName === 'SPAN' || e.target.tagName === 'EM') {
+      e.target.parentElement.classList.toggle('complete');
+    }
+  });
 });
+// ingredientListElement.addEventListener('click', (e) => {
+//   if (e.target.tagName === 'LI') {
+//     e.target.classList.toggle('complete');
+//   } else if (e.target.tagName === 'SPAN' || e.target.tagName === 'EM') {
+//     e.target.parentElement.classList.toggle('complete');
+//   }
+// });
 
-const originalIngredients = [];
+// const originalIngredients = [];
 
-ingredientElements.forEach((ingredient) => {
-  originalIngredients.push(ingredient.innerHTML);
-});
+// ingredientElements.forEach((ingredient) => {
+//   originalIngredients.push(ingredient.innerHTML);
+// });
 
 function updateIngredients(newValue) {
   // debugger;
@@ -106,10 +116,11 @@ function updateIngredients(newValue) {
   const defaultServesValue = currentRecipe.details.serves;
   const multiplier = (newValue / defaultServesValue).toFixed(2);
 
+  // soft conversion of measurements
   const mlPer = {
     ml: 1,
-    tsp: 4.2,
-    tbsp: 14.8,
+    tsp: 5, // 4.2
+    tbsp: 15, // 14.8
     cup: 250,
     litre: 1000,
   };
@@ -118,7 +129,24 @@ function updateIngredients(newValue) {
     let finalString = '';
     if (measurementType === 'g') finalString = `${measurement.toFixed(0).toString()}g`;
     if (measurementType === 'ml') {
-      if (measurement > mlPer.cup / 4 && measurement < mlPer.litre) {
+      if (measurement < mlPer.tsp) {
+        let x = measurement / mlPer.tsp;
+        finalString = `${x.toFixed(2).toString()} tsp`;
+      } else if (measurement >= mlPer.tsp && measurement < mlPer.tbsp) {
+        let x = measurement / mlPer.tsp;
+        if (measurement / mlPer.tsp <= 1) {
+          finalString = `${x.toFixed(2).toString()} tsp`;
+        } else {
+          finalString = `${x.toFixed(2).toString()} tsps`;
+        }
+      } else if (measurement >= mlPer.tbsp && measurement < mlPer.cup / 4) {
+        let x = measurement / mlPer.tbsp;
+        if (measurement / mlPer.tbsp <= 1) {
+          finalString = `${x.toFixed(2).toString()} tbsp`;
+        } else {
+          finalString = `${x.toFixed(2).toString()} tbsps`;
+        }
+      } else if (measurement >= mlPer.cup / 4 && measurement < mlPer.litre) {
         let x = measurement / mlPer.cup;
         if (measurement / mlPer.cup <= 1) {
           finalString = `${x.toFixed(2).toString()} cup`;
@@ -145,21 +173,21 @@ function updateIngredients(newValue) {
     // eslint-disable-next-line prefer-destructuring
     // console.log(ingredient.match(/\d\/\d|\d+\s\d\/\d/g) !== null);
     // debugger;
-    if (ingredient.match(/\d\/\d|\d+\s\d\/\d/g) !== null) {
+    if (ingredient.match(/\d\.\d|\d+\s\d\.\d/g) !== null) {
       let wholeNumber = 0;
       let numerator = 0;
       let denominator = 0;
-      if (ingredient.match(/\d\/\d/g)) {
-        numerator = parseInt(ingredient.match(/\d\/\d/g)[0], 10);
-        denominator = parseInt(ingredient.match(/\/\d/g)[0].slice(1), 10);
+      if (ingredient.match(/\d\.\d/g)) {
+        numerator = parseInt(ingredient.match(/\d\.\d/g)[0], 10);
+        denominator = parseInt(ingredient.match(/\.\d/g)[0].slice(1), 10);
         // console.log(denominator);
         numberOriginal = (numerator / denominator).toFixed(2);
         // console.log(numerator);
       }
-      if (ingredient.match(/\d+\s\d\/\d/g) !== null) {
+      if (ingredient.match(/\d+\s\d\.\d/g) !== null) {
         wholeNumber = parseInt(ingredient.match(/^\d+/g)[0], 10);
-        numerator = parseInt(ingredient.match(/\d\//g)[0], 10);
-        denominator = parseInt(ingredient.match(/\/\d/g)[0].slice(1), 10);
+        numerator = parseInt(ingredient.match(/\d\./g)[0], 10);
+        denominator = parseInt(ingredient.match(/\.\d/g)[0].slice(1), 10);
         numberOriginal = (wholeNumber + numerator / denominator).toFixed(2);
       }
     } else if (ingredient.match(/\d*\.*\d+/g) !== null) {
@@ -199,4 +227,4 @@ servesInputElement.addEventListener('change', () => {
 });
 
 console.log(ingredientElements);
-// window.onload = updateIngredients(4);
+window.onload = updateIngredients(4);
