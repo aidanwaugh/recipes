@@ -2,7 +2,7 @@
 /* eslint-disable import/extensions */
 import { allRecipes } from './recipe-list.js';
 
-console.log(allRecipes.breakfast); // output 'testing'
+// console.log(allRecipes.breakfast); // output 'testing'
 
 const recipeElements = {
   title: '[data-recipe-title]',
@@ -24,14 +24,13 @@ const recipeElements = {
   ingredients: '[data-ingredient]',
 };
 
-const navElements = {};
-
 const indexElements = {};
 
 const recipeGenre = document.querySelector(recipeElements.genre).dataset.genre;
+const recipeTitle = document.querySelector(recipeElements.title).innerHTML;
 console.log(allRecipes[recipeGenre]);
-const currentRecipe = allRecipes[recipeGenre].find((title) => title.name === 'bisucits'); // eslint-disable-line no-param-reassign
-if (currentRecipe === undefined) console.error('no matching recipe');
+const currentRecipe = allRecipes[recipeGenre].find((title) => title.name === recipeTitle); // eslint-disable-line no-param-reassign
+if (currentRecipe === undefined) console.error(`no matching recipe from title  ${recipeTitle} currRec is ${currentRecipe}`);
 console.log(currentRecipe);
 
 const servesInputElement = document.querySelector(recipeElements.servesInput);
@@ -120,10 +119,11 @@ function updateIngredients(newValue) {
     if (value > 1) plural = 's';
 
     const roundUp = 87;
-    const defaultComparison = [25, 50, 75];
-    const tspComparison = [12, 25, 50, 75];
-    const cupComparison = [25, 33, 50, 66, 75];
+    const defaultComparison = [0, 25, 50, 75];
+    const tspComparison = [0, 12, 25, 50, 75];
+    const cupComparison = [0, 25, 33, 50, 66, 75];
     const numberToFraction = {
+      0: '',
       12: '1/8',
       25: '1/4',
       33: '1/3',
@@ -257,3 +257,50 @@ servesInputElement.addEventListener('change', () => {
 
 console.log(ingredientElements);
 window.onload = updateIngredients(servesInputElement.value);
+
+/*  --------------- nav ------------- */
+const navElements = {
+  logo: '[data-nav-logo]',
+  all: '[data-nav-all]',
+  breakfast: '[data-nav-breakfast]',
+  dinner: '[data-nav-dinner]',
+  dessert: '[data-nav-dessert]',
+  snacks: '[data-nav-snacks]',
+  form: '[data-nav-form]',
+  input: '[data-nav-input]',
+};
+
+const navInput = document.querySelector(navElements.input);
+const navForm = document.querySelector(navElements.form);
+
+// ingredients: '[data-ingredient]',
+const breakpointWidths = {
+  xl: '(max-width: 2000px)',
+  lg: '(max-width: 1200px)',
+  md: '(max-width: 900px)',
+  sm: '(max-width: 600px)',
+};
+
+function myFunction(x) {
+  if (x.matches) {
+    // If media query matches
+    document.querySelector(navElements.breakfast).classList.add('hide');
+    document.querySelector(navElements.dinner).classList.add('hide');
+    document.querySelector(navElements.dessert).classList.add('hide');
+    document.querySelector(navElements.snacks).classList.add('hide');
+  } else {
+    document.querySelector(navElements.breakfast).classList.remove('hide');
+    document.querySelector(navElements.dinner).classList.remove('hide');
+    document.querySelector(navElements.dessert).classList.remove('hide');
+    document.querySelector(navElements.snacks).classList.remove('hide');
+  }
+}
+
+let x = window.matchMedia(breakpointWidths.md);
+myFunction(x); // Call listener function at run time
+x.addListener(myFunction); // Attach listener function on state changes
+
+navForm.addEventListener('click', (e) => {
+  e.preventDefault();
+  navInput.value = '';
+});

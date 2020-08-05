@@ -13,6 +13,8 @@
 ## Problems & Solutions
 - **Single recipe page layout** Placing a thumbnail image, title, info/ nutrition details in a 100% width on top taking minimal space had no clear layout that I liked. I tried adding an image on the top left, but the 33% 66% grid became too apparent with no divider. Other websites I looked at all have a large image and header with the user scrolling down or splits the page in 1/2 with image an info. However this takes up too much space. Having all the information right away is the most important aspect of the design. *solution* Create a 25% x4 grid.
 - **Ingredient amount conversion BUG** Scaling up and down is fine. But when I try to go up then down, the numbers don't line up properly. There is also a bug when going back down to original value. 
+- **Cooking uses imperial or US conversions** Used soft conversion values
+- **Cooking has so many types of measurements** I think that I have covered all measurement types (different tsp, cup, litre) but then I need to add kg and items that don't have units (3 garlic cloves). I then need to add more cases.
 
 - **Organized single CSS file** The index and recipe page had very little in common and there was a lot of copied CSS. *Solution* Create a new css with individual blocks
 
@@ -24,3 +26,4 @@
 - Write CSS from simple to complex. Create the common elements and grid for all pages, and make sure is responsive before adding in smaller UI details. Saves the hassle of going back and working from the base again or starting a new file (which I did)
 - Style mobile first (try and see difference) and expand out (rather than desktop down)
 - Find a better way to mange media queries
+- Use Test Driven Development (TDD) from the start, this would have saved lots of time debugging and allowed me to test multiple types of measurements

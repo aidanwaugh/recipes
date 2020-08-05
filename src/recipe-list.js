@@ -3,45 +3,40 @@
 export const allRecipes = {
   breakfast: [
     {
-      name: 'bisucits',
-      details: { serves: 4, type: 'ppl 3pc', difficulty: 'easy peasy', prep: 99, cook: 88 },
-      nutrition: {
-        serving: 1,
-        type: 'slice ref',
-        macros: { calories: 222, carbs: 33, fat: 22, protein: 11, fiber: 88, sugar: 999 },
-      },
-      ingredients: [
-        {
-          section: 'biscuit thing',
-          content: [
-            { value: 9, measurement: 'cups', ingredient: 'all-purpose flour' },
-            { value: 1, measurement: 'tsp', ingredient: 'salt' },
-            { value: 2.5, measurement: 'tsp', ingredient: 'baking powder' },
-            { value: 4, measurement: 'tbsp', ingredient: 'chilled butter, shortening, or combo' },
-          ],
-        },
-      ],
+      name: 'Biscuits',
+      details: { serves: 4, type: 'people 5pp', difficulty: 'easy peasy', prep: 99, cook: 88 },
+      nutrition: { serving: 1, type: 'slice ref', macros: { calories: 222, carbs: 33, fat: 22, protein: 11, fiber: 88, sugar: 999 } },
       tags: ['breakfast', 'waugh', 'oven'],
     },
+  ],
+  dinner: [
     {
-      name: 'ze',
-      details: { serves: 4, difficulty: 'easy', prep: 15, cook: 20 },
-      nutrition: {
-        serving: 1,
-        macros: { calories: 122, carbs: 3, fat: 2, protein: 1, fiber: 1, sugar: 1 },
-      },
-      ingredients: [
-        {
-          section: 'other thing',
-          content: [
-            { value: 9, measurement: 'cups', ingredient: 'all-purpose flour' },
-            { value: 1, measurement: 'tsp', ingredient: 'salt' },
-            { value: 2.5, measurement: 'tsp', ingredient: 'baking powder' },
-            { value: 4, measurement: 'tbsp', ingredient: 'chilled butter, shortening, or combo' },
-          ],
-        },
-      ],
-      tags: ['breakfast', 'waugh', 'oven'],
+      name: 'Honey Garlic Chicken Wings',
+      details: { serves: 4, type: 'people', difficulty: 'easy', prep: 20, cook: 50 },
+      nutrition: { serving: 1, type: 'x wings', macros: { calories: 11, carbs: 11, fat: 22, protein: 33, fiber: 4, sugar: 5 } },
+      tags: ['dinner', 'waugh', 'oven', 'chicken'],
+    },
+    {
+      name: 'Pork Dumplings',
+      details: { serves: 4, type: 'people', difficulty: 'easy', prep: 60, cook: 10 },
+      nutrition: { serving: 1, type: 'dumpling', macros: { calories: 11, carbs: 11, fat: 22, protein: 33, fiber: 4, sugar: 5 } },
+      tags: ['dinner', 'dumpling', 'chinese', 'pork', 'damndelicious'],
+    },
+  ],
+  dessert: [
+    {
+      name: 'Biscotti',
+      details: { serves: 6, type: 'people', difficulty: 'easy', prep: 20, cook: 10 },
+      nutrition: { serving: 1, type: 'slices', macros: { calories: 11, carbs: 11, fat: 22, protein: 33, fiber: 4, sugar: 5 } },
+      tags: ['waugh', 'xmas', 'dessert'],
+    },
+  ],
+  snacks: [
+    {
+      name: 'Romesco',
+      details: { serves: 6, type: 'people', difficulty: 'easy', prep: 20, cook: 10 },
+      nutrition: { serving: 1, type: 'cup?', macros: { calories: 11, carbs: 11, fat: 22, protein: 33, fiber: 4, sugar: 5 } },
+      tags: ['waugh', 'snack', 'blender'],
     },
   ],
 };
